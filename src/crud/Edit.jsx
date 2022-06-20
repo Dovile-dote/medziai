@@ -4,21 +4,21 @@ import TreeContext from '../components/TreeContext';
 function Edit() {
   const { modalData, setModalData, setEditData } = useContext(TreeContext);
 
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [type, setType] = useState('1');
-  const [place, setPlace] = useState('');
+  const [height, setHeight] = useState('');
 
   useEffect(() => {
     if (null === modalData) {
       return;
     }
-    setName(modalData.name);
+    setTitle(modalData.title);
     setType(modalData.type);
-    setPlace(modalData.place);
+    setHeight(modalData.height);
   }, [modalData]);
 
   const handleEdit = () => {
-    const data = { name, type, place, id: modalData.id };
+    const data = { title, type, height, id: modalData.id };
     setEditData(data);
     setModalData(null);
   };
@@ -47,8 +47,8 @@ function Edit() {
               <input
                 type="text"
                 className="form-control"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
               />
               <small className="form-text text-muted">
                 Enter Tree title here.
@@ -74,8 +74,8 @@ function Edit() {
               <input
                 type="text"
                 className="form-control"
-                onChange={(e) => setPlace(e.target.value)}
-                value={place}
+                onChange={(e) => setHeight(e.target.value)}
+                value={height}
               />
               <small className="form-text text-muted">
                 Enter tree height here.
