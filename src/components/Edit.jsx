@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import TreeContext from '../components/TreeContext';
+import TreeContext from './TreeContext';
 
 function Edit() {
   const { modalData, setModalData, setEditData } = useContext(TreeContext);

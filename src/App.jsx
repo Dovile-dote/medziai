@@ -1,25 +1,35 @@
 import { useEffect, useState } from 'react';
 import './bootstrap.css';
 import './crud.css';
-import Create from './crud/Create';
-import List from './crud/List';
-import Edit from './crud/Edit';
+import Create from './components/Create';
+import List from './components/List';
+import Edit from './components/Edit';
+import Message from './components/Message';
 import TreeContext from './components/TreeContext';
 import axios from 'axios';
+import GoodContext from './components/goods/GoodContext';
+
+import CreateGoods from './components/goods/Create';
 
 function App() {
   const [lastUpdate, setLastUpdate] = useState(Date.now());
 
+  // /////TREES/////
   const [trees, setTrees] = useState(null);
-
   const [modalData, setModalData] = useState(null);
-
   const [createData, setCreateData] = useState(null);
-
   const [deleteData, setDeleteData] = useState(null);
-
   const [editData, setEditData] = useState(null);
 
+  // /////GOODS////
+  const [goods, setGoods] = useState(null);
+  const [createDataGoods, setCreateDataGoods] = useState(null);
+
+  const [message, setMessage] = useState(null);
+
+  const [disableCreate, setDisableCreate] = useState(false);
+
+  // ///////////////////TREES/////////////////
   // Read
   useEffect(() => {
     axios
@@ -30,9 +40,20 @@ function App() {
   // Create
   useEffect(() => {
     if (null === createData) return;
-    axios.post('http://localhost:3003/medziai', createData).then((_) => {
-      setLastUpdate(Date.now());
-    });
+    axios
+      .post('http://localhost:3003/medziai', createData)
+      .then((res) => {
+        showMessage(res.data.msg);
+        setLastUpdate(Date.now());
+      })
+      // gaudo .catch errorus
+      .catch((error) => {
+        showMessage({ text: error.message, type: 'danger' });
+        console.log(error);
+      })
+      .then(() => {
+        setDisableCreate(false);
+      });
   }, [createData]);
 
   // Delete
@@ -53,6 +74,28 @@ function App() {
       });
   }, [editData]);
 
+  // ////////////////////GOODS//////////////////
+
+  // Create
+  useEffect(() => {
+    if (null === createDataGoods) return;
+    axios.post('http://localhost:3003/gerybes', createDataGoods).then((_) => {
+      setLastUpdate(Date.now());
+    });
+  }, [createDataGoods]);
+
+  // Read
+  useEffect(() => {
+    axios
+      .get('http://localhost:3003/gerybes')
+      .then((res) => setGoods(res.data));
+  }, [lastUpdate]);
+
+  const showMessage = (msg) => {
+    setMessage(msg);
+    setTimeout(() => setMessage(null), 5000);
+  };
+
   return (
     <TreeContext.Provider
       value={{
@@ -62,20 +105,32 @@ function App() {
         setModalData,
         modalData,
         setEditData,
+        message,
+        disableCreate,
+        setDisableCreate,
+        goods,
       }}
     >
-      <div className="container">
-        <div className="row">
-          <div className="col-4 mt-4">
-            <Create></Create>
-          </div>
+      <GoodContext.Provider
+        value={{
+          setCreateData: setCreateDataGoods,
+        }}
+      >
+        <div className="container">
+          <div className="row">
+            <div className="col-4 mt-4">
+              <Create />
+              <CreateGoods />
+            </div>
 
-          <div className="col-8">
-            <List></List>
+            <div className="col-8">
+              <List></List>
+            </div>
           </div>
         </div>
-      </div>
-      <Edit></Edit>
+        <Edit></Edit>
+        <Message></Message>
+      </GoodContext.Provider>
     </TreeContext.Provider>
   );
 }

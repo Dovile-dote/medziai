@@ -1,7 +1,7 @@
 // import { useState } from 'react';
 import { useContext } from 'react';
-import Tree from './Tree';
-import TreeContext from '../components/TreeContext';
+import Tree from '../components/Tree';
+import TreeContext from './TreeContext';
 
 function List() {
   const { trees } = useContext(TreeContext);
