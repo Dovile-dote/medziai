@@ -50,3 +50,8 @@ button.with-loader > .spinner-border {
 button.with-loader:disabled > .spinner-border {
   display: inline-block;
 }
+
+u {
+  margin-left: 10px;
+  color: skyblue;
+}
