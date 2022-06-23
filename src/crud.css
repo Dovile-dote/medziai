@@ -12,7 +12,14 @@ body {
 .content {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+.content li {
+  /* min-width: 300px; */
+  font-weight: bold;
+  color: pink;
+  background-color: rgba(118, 160, 239, 0.355);
 }
 
 .buttons {
@@ -54,4 +61,11 @@ button.with-loader:disabled > .spinner-border {
 u {
   margin-left: 10px;
   color: skyblue;
+}
+
+.item-front {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 }
