@@ -8,7 +8,8 @@ function Front() {
   const [goods, setGoods] = useState(null);
   const [trees, setTrees] = useState(null);
   const [createComment, setCreateComment] = useState(null);
-  // Read
+
+  // Read gerybes
   useEffect(() => {
     axios.get('http://localhost:3003/front/gerybes').then((res) => {
       console.log(res.data);
@@ -16,7 +17,7 @@ function Front() {
     });
   }, []);
 
-  // Read
+  // Read medziai
   useEffect(() => {
     axios.get('http://localhost:3003/front/medziai').then((res) => {
       console.log(res.data);
@@ -26,9 +27,14 @@ function Front() {
 
   // Create
   useEffect(() => {
-    if(null === createComment) return;
-    axios.post('http://localhost:3003/front/komentarai').then(())
-  })
+    if (null === createComment) return;
+    axios
+      .post('http://localhost:3003/front/komentarai', createComment)
+      .then((_) => {
+        // setLastUpdate(Date.now());
+      });
+  }, [createComment]);
+
   return (
     <FrontContext.Provider
       value={{
@@ -41,9 +47,9 @@ function Front() {
         <div className="row">
           <div className="col-5">
             <FrontList />
-            <div className="col-7">
-              <TreeList />
-            </div>
+          </div>
+          <div className="col-7">
+            <TreeList />
           </div>
         </div>
       </div>

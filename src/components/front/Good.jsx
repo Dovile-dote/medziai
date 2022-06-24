@@ -2,7 +2,7 @@ function Good({ good }) {
   return (
     <li className="list-group-item">
       <div className="item">
-        <div className="content">
+        <div className="nest-content">
           <h2>{good.title} </h2>
           <ul className="list-group">
             {good.tree_titles
