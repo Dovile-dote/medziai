@@ -19,6 +19,14 @@ function Tree({ tree }) {
           <span>{['Leaf', 'Spike', 'Palm'][tree.type - 1]}</span>
           <i>{tree.height.toFixed(2)} m</i> <u>{tree.good}</u>
         </div>
+        <ul>
+          {tree.coms
+            ? tree.coms
+                .slice(0, -5)
+                .split('-^o^-,')
+                .map((c, i) => <li key={i}>{c}</li>)
+            : null}
+        </ul>
         <div className="form-group">
           <label>Your comment here</label>
           <textarea
@@ -37,14 +45,6 @@ function Tree({ tree }) {
             I want to say
           </button>
         </div>
-        <ul>
-          {tree.coms
-            ? tree.coms
-                .slice(0, -5)
-                .split('-^o^-,')
-                .map((c, i) => <li key={i}>{c}</li>)
-            : null}
-        </ul>
       </div>
     </li>
   );

@@ -31,6 +31,11 @@ function Back() {
 
   const [disableCreate, setDisableCreate] = useState(false);
 
+  // reloadinti puslapi kas 3 sekundes
+  useEffect(() => {
+    // setInterval(() => setLastUpdate(Date.now()), 3000);
+  }, []);
+
   // ///////////////////TREES/////////////////
   // Read
   useEffect(() => {
@@ -65,6 +70,14 @@ function Back() {
       setLastUpdate(Date.now());
     });
   }, [deleteData]);
+
+  // DElete comment
+
+  const handleDeleteComment = (id) => {
+    axios.delete('http://localhost:3003/komentarai/' + id).then((_) => {
+      setLastUpdate(Date.now());
+    });
+  };
 
   // Edit
   useEffect(() => {
@@ -122,6 +135,7 @@ function Back() {
         disableCreate,
         setDisableCreate,
         goods,
+        handleDeleteComment,
       }}
     >
       <GoodContext.Provider
